@@ -89,7 +89,7 @@ typedef struct
   const char* options[4];
   const char* suffix;
 }menu_item;
-int menu_items_limit = 10-1;
+int menu_items_limit = 11-1;
 menu_item menu[10];
 
 
@@ -151,6 +151,7 @@ void setup(){
  menu[6].options[0] = "Dose";
  menu[6].options[1] = "Pump";
  menu[6].options[2] = "Cal.";
+ menu[6].options[3] = "Repeat";
 
  menu[7].name_ = "Cal.";
  menu[7].type = VALUE;
@@ -170,6 +171,13 @@ void setup(){
  menu[9].value = 0;
  menu[9].lim = 0;
  menu[9].suffix = "ON!";
+
+ menu[10].name_ = "R.Delay";
+ menu[10].type = REPEAT_DELAY;
+ menu[10].value = 0;
+ menu[10].decimals = 1;
+ menu[10].lim = 9999;
+ menu[10].suffix="s";
 
   for (int i=0; i <= menu_items_limit; i++){
       menu[i].value = eepromReadInt(i*2);
@@ -282,6 +290,10 @@ if (in_action){
   } else if (menu[6].value == 2){ //Cal.
     if (dose(CALIBR_STEPS, CALIBR_DELAY_US, step_counter)){
       exit_action_menu();
+    }
+  } else if (menu[6].value == 3){ //Repeat
+    while (dose(steps, delay_us, step_counter)){     
+      delay(REPEAT_DELAY * MICROSEC_PER_SEC);
     }
   }
   break;
