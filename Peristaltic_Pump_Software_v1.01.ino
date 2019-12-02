@@ -173,7 +173,7 @@ void setup(){
  menu[9].suffix = "ON!";
 
  menu[10].name_ = "R.Delay";
- menu[10].type = REPEAT_DELAY;
+ menu[10].type = VALUE;
  menu[10].value = 0;
  menu[10].decimals = 1;
  menu[10].lim = 9999;
@@ -293,7 +293,7 @@ if (in_action){
     }
   } else if (menu[6].value == 3){ //Repeat
     while (dose(steps, delay_us, step_counter)){     
-      delay(REPEAT_DELAY * MICROSEC_PER_SEC);
+      delay(menu[10].value * MICROSEC_PER_SEC);
     }
   }
   break;
